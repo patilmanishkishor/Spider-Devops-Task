@@ -1,0 +1,158 @@
+#!/bin/bash
+cd ~/Desktop
+mkdir Spider
+cd Spider
+mkdir "Domains" "Common Announcements"
+cd Domains
+mkdir "DevOps" "Webdev" "AppDev" "Algos" "EE" "SPML" 'UI\UX' "Robotics" 
+dirs=(DevOps Webdev AppDev Algos EE SPML "UI\UX" Robotics)
+chmod -R +755 $(pwd)
+
+for i in 0 1 2 3 4 5 6 7
+do
+	mkdir ${dirs[i]}/Tasks
+	mkdir ${dirs[i]}/Tasks/Submissions
+	mkdir ${dirs[i]}/Announcements
+	mkdir ${dirs[i]}/Grades
+done
+
+for m in {1..66}
+do
+	sudo useradd mentee$m
+done
+
+for m in 1 2 3
+do
+	sudo useradd mentor$m
+done
+
+sudo groupadd DevOps
+
+for m in {1..10}
+do
+	sudo usermod -a -G DevOps mentee$m
+done
+
+sudo groupadd Webdev
+
+for m in 1 2 {11..18}
+do
+	sudo usermod -a -G Webdev mentee$m
+done
+
+sudo groupadd AppDev
+
+for m in 11 12 {19..26}
+do
+	sudo usermod -a -G AppDev mentee$m
+done
+
+sudo groupadd Algos
+
+for m in 19 20 {27..34}
+do
+	sudo usermod -a -G Algos mentee$m
+done
+
+sudo groupadd EE
+
+for m in 27 28 {35..42}
+do
+	sudo usermod -a -G EE mentee$m
+done
+
+sudo groupadd SPML
+
+for m in 35 36 {43..50}
+do
+	sudo usermod -a -G SPML mentee$m
+done
+
+sudo groupadd "UI\UX"
+
+for m in 43 44 {51..58}
+do
+	sudo usermod -a -G "UI\UX" mentee$m
+done
+
+sudo groupadd Robotics
+
+for m in 51 52 {59..66}
+do
+	sudo usermod -a -G Robotics mentee$m
+done
+
+sudo usermod -a -G DevOps,Webdev,AppDev mentor1
+sudo usermod -a -G Algos,EE,SPML mentor2
+sudo usermod -a -G "UI\UX",Robotics mentor3
+
+sudo groupadd Mentors
+
+for m in 1 2 3 
+do
+	sudo usermod -a -G Mentors mentor$m
+done
+
+sudo groupadd Mentees
+
+for m in {1..66}
+do
+	sudo usermod -a -G Mentees mentee$m
+done
+
+for i in {0..7}
+do
+	setfacl -m g:Mentors:r-- ${dirs[i]}/Tasks
+done
+
+for i in {0..7}
+do
+	setfacl -m g:Mentees:r-- ${dirs[i]}/Tasks
+done
+
+for i in {0..7}
+do
+	setfacl -m g:Mentees:rw- ${dirs[i]}/Tasks/Submissions
+done
+
+for i in {0..7}
+do
+	setfacl -m g:Mentors:r-- ${dirs[i]}/Tasks/Submissions
+done
+
+for i in {0..7}
+do
+	setfacl -m g:Mentors:rw- ${dirs[i]}/Grades
+done
+
+for i in {0..7}
+do
+	setfacl -m g:Mentees:r-- ${dirs[i]}/Grades
+done
+
+setfacl -m g:Mentors:r-- "Common Announcements"
+
+for i in {0..7}
+do
+	setfacl -m g:Mentors:r-- ${dirs[i]}/Announcements
+done
+
+for i in {0..7}
+do
+	setfacl -m g:Mentors:r-- ${dirs[i]}/Announcements
+done
+
+for i in {0..7}
+do
+	touch ${dir[i]}/Inductees.txt
+done
+
+for i in {0..7}
+do
+	touch ${dir[i]}/Grades/Task1-Grades.txt
+done
+
+for i in {0..7}
+do
+	touch ${dir[i]}/Announcements/Welcome.txt
+done
