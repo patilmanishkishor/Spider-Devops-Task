@@ -3,6 +3,9 @@ cd ~/Desktop
 mkdir Spider
 cd Spider
 mkdir "Domains" "Common Announcements"
+
+setfacl -m g:Mentors:r-- "Common Announcements"
+
 cd Domains
 mkdir "DevOps" "Webdev" "AppDev" "Algos" "EE" "SPML" 'UI\UX' "Robotics" 
 dirs=(DevOps Webdev AppDev Algos EE SPML "UI\UX" Robotics)
@@ -130,8 +133,6 @@ do
 	setfacl -m g:Mentees:r-- ${dirs[i]}/Grades
 done
 
-setfacl -m g:Mentors:r-- "Common Announcements"
-
 for i in {0..7}
 do
 	setfacl -m g:Mentors:r-- ${dirs[i]}/Announcements
@@ -144,15 +145,15 @@ done
 
 for i in {0..7}
 do
-	touch ${dir[i]}/Inductees.txt
+	touch ${dirs[i]}/Inductees.txt
 done
 
 for i in {0..7}
 do
-	touch ${dir[i]}/Grades/Task1-Grades.txt
+	touch ${dirs[i]}/Grades/Task1-Grades.txt
 done
 
 for i in {0..7}
 do
-	touch ${dir[i]}/Announcements/Welcome.txt
+	touch ${dirs[i]}/Announcements/Welcome.txt
 done
